@@ -17,6 +17,7 @@ seed = 9
 # empty lists to hold feature vectors and labels
 global_features = []
 labels = []
+
 def EkstraksiWarna(img):
     data=[]
     # Mencari rata-rata dan standar deviasi dari image (Library OpenCV)
@@ -26,6 +27,7 @@ def EkstraksiWarna(img):
     data[:]=stats
 
     return data
+
 # get the training labels
 train_labels = os.listdir(train_path)
 for training_name in train_labels:
