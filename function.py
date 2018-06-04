@@ -59,3 +59,29 @@ def EkstraksiWarna(img):
     stats = list(np.concatenate([means]).flatten())
     data[:]=stats
     return data
+
+def accuracy(pred,start,end,kelas):
+    a=0
+    for i in range(start, end):
+        if pred[i] != kelas:
+            a = a + 0
+        else:
+            a = a + 1
+    return a
+
+def extract(dir):
+    fitur = []
+    for img in dir:
+        image = cv2.imread(img)
+        height, width, channels = image.shape
+        if height < width:
+            image = np.rot90(image)
+        # kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
+        # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
+        # dan sebelumnya memanggil semua fungsi ekstraksi
+
+        entropi = entropy(image)
+        rgb = EkstraksiWarna(image)
+        semuaFitur = np.hstack([entropi, rgb])
+        fitur.append(semuaFitur)
+    return fitur

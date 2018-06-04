@@ -82,7 +82,7 @@ for img in imgs1:
     #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
     # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
     # dan sebelumnya memanggil semua fungsi ekstraksi
-    # image = cv2.resize(image, fixed_size)
+    image = cv2.resize(image, fixed_size)
     entropi = entropy(image)
     rgb = EkstraksiWarna(image)
     semuaFitur = np.hstack([entropi, rgb])
@@ -101,6 +101,7 @@ for img in imgs2:
     #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
     # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
     # dan sebelumnya memanggil semua fungsi ekstraksi
+    image = cv2.resize(image, fixed_size)
     entropi = entropy(image)
     rgb = EkstraksiWarna(image)
     semuaFitur = np.hstack([entropi, rgb])

@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 from sklearn import svm
 from sklearn.model_selection import train_test_split
-from function import EkstraksiWarna,preprocess,entropy
+from function import preprocess,accuracy,extract
 fixed_size = tuple((150, 250))
 
 imgs1 = sorted(glob.glob('data/Chinese Tallow 1/*.jpg'))
@@ -17,109 +17,41 @@ imgs5 = sorted(glob.glob('data/Hevea Brasilinsis 5 - Copy/*.jpg'))
 
 
 # EKSTRAKSI FITUR
-fitur = []
-fiturTrain=[]
-fiturX=[]
-for img in imgs1:
-    image = cv2.imread(img)
-    height, width, channels = image.shape
-    if height < width:
-        image = np.rot90(image)
-    #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
-    # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
-    # dan sebelumnya memanggil semua fungsi ekstraksi
-
-    entropi = entropy(image)
-    rgb = EkstraksiWarna(image)
-    semuaFitur = np.hstack([entropi, rgb])
-    fitur.append(semuaFitur)
+image1=extract(imgs1)
 #data fitur displit menjadi data training dan data test
-X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
+X_train, X_test = train_test_split(image1, test_size=0.3)
 #data train &test dimasukan/diextend ke array
 fiturTrain=X_train
 fiturX=X_test
-fitur = []
-X_train=[]
-X_test=[]
-for img in imgs2:
-    image = cv2.imread(img)
-    if height < width:
-        image = np.rot90(image)
-    #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
-    # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
-    # dan sebelumnya memanggil semua fungsi ekstraksi
-    entropi = entropy(image)
-    rgb = EkstraksiWarna(image)
-    semuaFitur = np.hstack([entropi, rgb])
-    fitur.append(semuaFitur)
+
+image2=extract(imgs2)
 #data fitur displit menjadi data training dan data test
-X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
+X_train, X_test = train_test_split(image2, test_size=0.3)
 #data train &test dimasukan/diextend ke array
 fiturTrain.extend(X_train)
 fiturX.extend(X_test)
-fitur = []
-X_train=[]
-X_test=[]
-for img in imgs3:
-    image = cv2.imread(img)
-    height, width, channels = image.shape
-    if height < width:
-        image = np.rot90(image)
-    #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
-    # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
-    # dan sebelumnya memanggil semua fungsi ekstraksi
-    entropi = entropy(image)
-    rgb = EkstraksiWarna(image)
-    semuaFitur = np.hstack([entropi, rgb])
-    fitur.append(semuaFitur)
-#data fitur displit menjadi data training dan data test
-X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
+
+image3=extract(imgs3)
+X_train, X_test = train_test_split(image3, test_size=0.3)
 #data train &test dimasukan/diextend ke array
 fiturTrain.extend(X_train)
 fiturX.extend(X_test)
-fitur = []
 X_train=[]
 X_test=[]
-for img in imgs4:
-    image = cv2.imread(img)
-    height, width, channels = image.shape
-    if height < width:
-        image = np.rot90(image)
-    # kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
-    # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
-    # dan sebelumnya memanggil semua fungsi ekstraksi
-    entropi = entropy(image)
-    rgb = EkstraksiWarna(image)
-    semuaFitur = np.hstack([entropi, rgb])
-    fitur.append(semuaFitur)
+image4=extract(imgs4)
 #data fitur displit menjadi data training dan data test
-X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
+X_train, X_test = train_test_split(image4, test_size=0.3)
 #data train &test dimasukan/diextend ke array
 fiturTrain.extend(X_train)
 fiturX.extend(X_test)
-fitur = []
-X_train=[]
-X_test=[]
-for img in imgs5:
-    image = cv2.imread(img)
-    # kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
-    # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
-    # dan sebelumnya memanggil semua fungsi ekstraksi
-    height, width, channels = image.shape
-    if height < width:
-        image = np.rot90(image)
-    entropi = entropy(image)
-    rgb = EkstraksiWarna(image)
-    semuaFitur = np.hstack([entropi, rgb])
-    fitur.append(semuaFitur)
+
+image5=extract(imgs5)
 #data fitur displit menjadi data training dan data test
-X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
+X_train, X_test = train_test_split(image5, test_size=0.3)
 #data train &test dimasukan/diextend ke array
 fiturTrain.extend(X_train)
 fiturX.extend(X_test)
-fitur = []
-X_train=[]
-X_test=[]
+
 
 #Generate kelas untuk data di atas (1 sampe 5, masing2 300)
 kelas = []
@@ -141,3 +73,32 @@ loaded_model = pickle.load(open(filename, 'rb'))
 print(loaded_model)
 prediksi = loaded_model.predict(fiturX)
 print(prediksi)
+
+acc=accuracy(prediksi,0,89,1)
+acc2=accuracy(prediksi,90,179,2)
+acc3=accuracy(prediksi,180,269,3)
+acc4=accuracy(prediksi,270,359,4)
+acc5=accuracy(prediksi,360,449,5)
+print((acc+acc2+acc3+acc4+acc5)/450*100)
+
+
+
+# #Data test
+# imgs6 = sorted(glob.glob('data/Data Train Buat Test - Copy/*.jpg'))
+# fiturTest = []
+# for img in imgs6:
+#     image = cv2.imread(img)
+#     # print(img)
+#     #kalau fungsi ekstraksi fitur sudah ada semua, penulisan bagian entropi jadi gini:
+#     # semuaFitur = np.hstack([fitur1, fitur2, fitur3, dst.]), sisanya menyesuaikan
+#     # dan sebelumnya memanggil semua fungsi ekstraksi
+#     height, width, channels = image.shape
+#     if height < width:
+#         image=np.rot90(image)
+#     image = cv2.resize(image, fixed_size)
+#     entropi = entropy(image)
+#     rgb = EkstraksiWarna(image)
+#     semuaFitur = np.hstack([entropi, rgb])
+#     fiturTest.append(semuaFitur)
+# prediksi = loaded_model.predict(fiturTest)
+# print(prediksi)
