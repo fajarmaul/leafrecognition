@@ -45,9 +45,6 @@ for img in imgs:
 for i in range(0,len(hasilrgb)):
     print(hasilrgb[i])
 
-
-
-
 # csv.write("data",fitur)
 var1 = 3.3333
 var2 = 50284

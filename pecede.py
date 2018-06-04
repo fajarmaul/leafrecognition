@@ -54,5 +54,5 @@ for training_name in train_labels:
 #     print i
 #     print(global_features[i])
 
-print len(global_features)
+print (len(global_features))
 
