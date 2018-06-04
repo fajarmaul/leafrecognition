@@ -12,14 +12,15 @@ fixed_size = tuple((150, 250))
 imgs1 = sorted(glob.glob('data/Chinese Tallow 1/*.jpg'))
 imgs2 = sorted(glob.glob('data/Euphorbia Mili 2/*.jpg'))
 imgs3 = sorted(glob.glob('data/Excoecaria 3/*.jpg'))
-imgs4 = sorted(glob.glob('data/Garden Croton 4 - Copy/*.jpg'))
-imgs5 = sorted(glob.glob('data/Hevea Brasilinsis 5 - Copy/*.jpg'))
+imgs4 = sorted(glob.glob('data/Garden Croton 4/*.jpg'))
+imgs5 = sorted(glob.glob('data/Hevea Brasilinsis 5/*.jpg'))
 
 
 # EKSTRAKSI FITUR
 fitur = []
 fiturTrain=[]
 fiturX=[]
+count = 0
 for img in imgs1:
     image = cv2.imread(img)
     height, width, channels = image.shape
@@ -32,6 +33,8 @@ for img in imgs1:
     entropi = entropy(image)
     rgb = EkstraksiWarna(image)
     semuaFitur = np.hstack([entropi, rgb])
+    count = count + 1
+    print(str((count))+" "+ str(semuaFitur))
     fitur.append(semuaFitur)
 #data fitur displit menjadi data training dan data test
 X_train, X_test = train_test_split(fitur, test_size=0.3, random_state=42)
@@ -140,4 +143,16 @@ pickle.dump(clf, open(filename, 'wb'))  #-->simpan model dengan penamaan di atas
 loaded_model = pickle.load(open(filename, 'rb'))
 print(loaded_model)
 prediksi = loaded_model.predict(fiturX)
-print(prediksi)
+
+
+print("Prediksi kelas 1 = ")
+print(prediksi[0:89])
+print("Prediksi kelas 2 = ")
+print(prediksi[90:179])
+print("Prediksi kelas 3 = ")
+print(prediksi[180:269])
+print("Prediksi kelas 4 = ")
+print(prediksi[270:359])
+print("Prediksi kelas 5 = ")
+print(prediksi[360:449])
+

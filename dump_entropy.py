@@ -8,6 +8,7 @@ from sklearn import svm
 from sklearn.model_selection import train_test_split
 from function import EkstraksiWarna,preprocess,entropy
 fixed_size = tuple((150, 250))
+
 #Fungsi hitung entropi
 def preprocess(img):
     def subgraygray(gray1, gray2):
